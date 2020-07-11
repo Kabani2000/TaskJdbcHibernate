@@ -22,12 +22,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try {
-            statement.executeUpdate("CREATE TABLE users " +
-                    "('id' INT NOT NULL AUTO_INCREMENT, " +
-                    "'name' VARCHAR(45) NOT NULL , " +
-                    "'lastName' VARCHAR(45) NOT NULL , " +
-                    "age INT(3) NOT NULL )");
-        } catch (SQLException e) {
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS users (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(60) NOT NULL , lastName VARCHAR(60) NOT NULL , age INT(3) NOT NULL )");
+        } catch (SQLException | NullPointerException e) {
             System.out.println("Не вышло: " + e);
         }
     }
@@ -54,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try {
-            statement.executeUpdate("DELETE FROM users WHERE Id = " + id);
+            statement.executeUpdate("DELETE FROM users WHERE id = " + id);
         } catch (SQLException e) {
             System.out.println("Не тут-то было " + e);
         }
@@ -63,7 +59,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            statement.execute("SELECT * FROM Users");
+            statement.execute("SELECT * FROM users");
             ResultSet resultSet = statement.getResultSet();
 
             while (resultSet.next()) {
