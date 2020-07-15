@@ -13,7 +13,7 @@ public class Main {
         userService.saveUser("German", "Sevostyanov", (byte) 31);
         userService.saveUser("Neo", "Matrix", (byte) 100);
         userService.getAllUsers().forEach(System.out::println);
-        userService.cleanUsersTable();
-        userService.dropUsersTable();
+        //userService.cleanUsersTable();
+        //userService.dropUsersTable();
     }
 }
